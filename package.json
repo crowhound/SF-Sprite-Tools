@@ -1,0 +1,20 @@
+{
+  "name": "com.shatter-fantasy.sf-sprite-tools",
+  "displayName": "SF Sprite Tools",
+  "version": "0.0.3",
+  "unity": "2023.2",
+  "description": "A set of tools to help make working with sprite based games easier. This includes Sprite Data Editing, Sprite Animation, and Tilemap tools",
+  "category": "Sprite",
+  "author": {
+    "name": "Jonathan Westfall - Shatter Fantasy",
+    "url": "https://github.com/Shatter-Fantasy"
+  },
+  "dependencies": {
+    "com.unity.2d.common": "9.0.6",
+    "com.unity.2d.sprite": "1.0.0",
+    "com.unity.2d.tilemap": "1.0.0"
+  },
+  "_upm": {
+    "changelog": "### In Obisidian being typed up. Just now formmated to be put here yet."
+  }
+}
