@@ -1,0 +1,25 @@
+{
+    "name": "SFEditor.2DTools",
+    "rootNamespace": "SFEditor",
+    "references": [
+        "GUID:bd2461be96e5f744bbe6bdbc5276eb61",
+        "GUID:2c573e6b271651846a79655161004c5b",
+        "GUID:24bbfa70f4a5840c3ab7da95e6835815",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:70643826bc633b246af1ece2db1e8338",
+        "GUID:e35e215503ab6b34eb8cadb39b7719da",
+        "GUID:5769175a692bee24cbd874f396613351",
+        "GUID:a36038c41c31fd4468a7b4729e0e6ae4"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

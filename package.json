@@ -16,5 +16,6 @@
   },
   "_upm": {
     "changelog": "### In Obisidian being typed up. Just now formmated to be put here yet."
-  }
+  },
+  "hideInEditor": false
 }
