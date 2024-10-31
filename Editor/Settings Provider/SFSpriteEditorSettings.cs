@@ -14,48 +14,68 @@ namespace SFEditor
 		private static string SFSpriteEditorSettingsFolderPath;
 
 		#region Sprite Animation Settings
+		public string DefaultAnimationClipFolderPath = "Assets/Animations/";
 		/// <summary>
-		/// The default value for how many frames per second are set when creating a new animation clip in the SF Sprite Editor. Due note if the _rememberManuallySetFPS bool is set to true the value set for new clips will be the _lastSetFramesPerSecond.
+		/// The default value for how many frames per second are set when creating a new animation clip in the SF Sprite Editor. Due note if the _rememberManuallySetSPS bool is set to true the value set for new clips will be the _lastSetSamplesPerSecond.
 		/// </summary>
-		[SerializeField] private uint _framesPerSecond = 24;
+		public uint SamplesPerSecond = 24;
 
 		/// <summary>
 		/// This is the last value set by the user for frames per second in the Animation overlay inside the SF Sprite Editor.
 		/// </summary>
-		[SerializeField] private uint _lastSetFramesPerSecond = 0;
+		[SerializeField] private uint _lastSetSamplesPerSecond = 0;
 
 		/// <summary>
 		/// Should the SF Sprite Inspector remember the last manually set value of the frames per second and use it when creating new Animation Clips. This settings is project based currently so each project will be able to remeber a different value.
 		/// </summary>
-		[SerializeField] private bool _rememberManuallySetFPS = true;
+		[SerializeField] private bool _rememberManuallySetSPS = true;
 		#endregion
+
+		public bool WasAnimatorInspectorOpen = false;
 
 		[SerializeField] private Color _spriteFrameColor = new Color(.55f, .55f, .55f, 1);
 		[SerializeField] private Color _lastSelectedSpriteFrameColor = new Color(0, .7f, 0, 1);
 		[SerializeField] private Color _multipleSelectedSpriteFrameColor = new Color(0, 0.1f, .7f, 1);
 
-		protected static SFSpriteEditorSettings GetOrCreateSettings()
+		public static SFSpriteEditorSettings GetOrCreateSettings()
 		{
 			var settings = AssetDatabase.LoadAssetAtPath<SFSpriteEditorSettings>(SFSpriteEditorSettingsPath);
 
 			if(settings == null)
 			{
 				settings = CreateInstance<SFSpriteEditorSettings>();
-				settings._framesPerSecond = 24;
-				settings._lastSetFramesPerSecond = 0;
-				settings._rememberManuallySetFPS = true;
+				settings.SamplesPerSecond = 24;
+				settings._lastSetSamplesPerSecond = 0;
+				settings._rememberManuallySetSPS = true;
 
-				if(!CheckIfDirectoryExists())
+				if(!CheckIfSettingsDirectoryExists())
 					Directory.CreateDirectory(SFSpriteEditorSettingsFolderPath);
+
+				if(!CheckIfAnimationFolderExists(settings))
+					Directory.CreateDirectory(settings.DefaultAnimationClipFolderPath);
 
 				AssetDatabase.CreateAsset(settings, SFSpriteEditorSettingsPath);
 				AssetDatabase.SaveAssets();
 
 			}
 			return settings;
-		}
+		} 
 
-		private static bool CheckIfDirectoryExists()
+		private static bool CheckIfAnimationFolderExists(SFSpriteEditorSettings settings)
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.Append(Application.dataPath);
+			sb.Replace("Assets", "");
+			sb.Append(settings.DefaultAnimationClipFolderPath);
+
+			settings.DefaultAnimationClipFolderPath = sb.ToString();
+
+			if(!Directory.Exists(settings.DefaultAnimationClipFolderPath))
+				Debug.LogWarning(settings.DefaultAnimationClipFolderPath);
+
+			return false;
+		}
+		private static bool CheckIfSettingsDirectoryExists()
 		{
 			StringBuilder sb = new StringBuilder();
 			sb.Append(Application.dataPath);
@@ -66,7 +86,7 @@ namespace SFEditor
 			SFSpriteEditorSettingsFolderPath = sb.ToString();
 
 			if(!Directory.Exists(SFSpriteEditorSettingsFolderPath))
-				Debug.Log(SFSpriteEditorSettingsFolderPath);
+				Debug.LogWarning(SFSpriteEditorSettingsFolderPath);
 
 			return false;
 		}
