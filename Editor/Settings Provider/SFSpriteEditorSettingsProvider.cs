@@ -61,9 +61,11 @@ namespace SFEditor
 						text = "Animation Settings",
 					};
 					propertiesContainer.Add(animationSectionTitle);
-					propertiesContainer.Add(new PropertyField(settings.FindProperty("_framesPerSecond")));
+					propertiesContainer.Add(new PropertyField(settings.FindProperty("WasAnimatorInspectorOpen")));
+					propertiesContainer.Add(new PropertyField(settings.FindProperty("DefaultAnimationClipFolderPath")));
+					propertiesContainer.Add(new PropertyField(settings.FindProperty("SamplesPerSecond")));
 
-					propertiesContainer.Add(new PropertyField(settings.FindProperty("_rememberManuallySetFPS")));
+					propertiesContainer.Add(new PropertyField(settings.FindProperty("_rememberManuallySetSPS")));
 
 
 
@@ -80,7 +82,7 @@ namespace SFEditor
 				},
 
 				// Populate the keywords for the search bar inside of the project settings menu.
-				keywords = new HashSet<string>(new[] { "FramesPerSecond", "FPS", "AnimationFPS", "SF SpriteEditor", "SF" })
+				keywords = new HashSet<string>(new[] { "SamplesPerSecond", "FPS", "AnimationFPS", "SF SpriteEditor", "SF" })
 			};
 
 			return provider;
