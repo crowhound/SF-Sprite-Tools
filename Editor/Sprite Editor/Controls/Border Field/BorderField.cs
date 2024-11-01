@@ -12,7 +12,7 @@ namespace SFEditor
 		private VisualTreeAsset _borderFieldUXML; 
 		public BorderField() 
 		{
-			_borderFieldUXML = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/SF.2DTools/Editor/Sprite Editor/Controls/Border Field/BorderField.uxml");
+			_borderFieldUXML = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.shatter-fantasy.sf-sprite-tools/Editor/Sprite Editor/Controls/Border Field/BorderField.uxml");
 
 			_borderFieldUXML.CloneTree(this);
 		}

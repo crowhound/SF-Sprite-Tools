@@ -6,14 +6,14 @@
     xmlns:sfui="SF.UIElements"
     xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
 >
-  <Style src="Packages/shatter-fantasy.sf-ui-elements/Runtime/Styles/CommonUSS.uss"/>
+  <Style src="project://database/Packages/com.shatter-fantasy.sf-ui-elements/Runtime/Styles/CommonUSS.uss"/>
   <ui:Label text="Border"/>
   <sfui:SFRow class="split">
     <ui:IntegerField label="L"/>
-    <ui:IntegerField label="R"/>
+    <ui:IntegerField label="T"/>
   </sfui:SFRow>
   <sfui:SFRow class="split">
-    <ui:IntegerField label="T"/>
+    <ui:IntegerField label="R"/>
     <ui:IntegerField label="B"/>
   </sfui:SFRow>
 </ui:UXML>
