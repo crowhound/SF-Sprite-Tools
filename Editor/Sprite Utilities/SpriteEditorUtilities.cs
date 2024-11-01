@@ -67,6 +67,8 @@ namespace SFEditor.SpritesData.Utilities
 
 		// TODO: Implement the ITextureDataProvider is we can't use the ISpriteEditorDataProvider.
 
+
+
 		/// <summary>
 		/// Returns a filtered IEnmerable collection of Sprite Rects from the passed in Sprites and the sprite rects contained in the passed in data provider.
 		/// </summary>
@@ -261,6 +263,7 @@ namespace SFEditor.SpritesData.Utilities
             assetImporter.SaveAndReimport();
         }
 
+		#region Sprite Data Helpers
 		public static List<SpriteData> ToSpriteData(this List<SpriteRect> spriteRects)
 		{
 			// TODO: Improve performance of this later by making a ConvertAll TOutPut Extension down the line.
@@ -272,7 +275,6 @@ namespace SFEditor.SpritesData.Utilities
 			}
 			return spriteDatas;
 		}
-
 		public static List<SpriteData> ToSpriteData(this SpriteRect[] spriteRects)
 		{
 			// TODO: Improve performance of this later by making a ConvertAll TOutPut Extension down the line.
@@ -284,6 +286,40 @@ namespace SFEditor.SpritesData.Utilities
 			}
 			return spriteDatas;
 		}
+		#endregion
+
+		#region Sprite Pivot Helpers
+		public static Vector2 GetPivotValue(SpriteAlignment alignment, Vector2 customOffset)
+		{
+			switch(alignment)
+			{
+				case SpriteAlignment.BottomLeft:
+					return new Vector2(0f, 0f);
+				case SpriteAlignment.BottomCenter:
+					return new Vector2(0.5f, 0f);
+				case SpriteAlignment.BottomRight:
+					return new Vector2(1f, 0f);
+
+				case SpriteAlignment.LeftCenter:
+					return new Vector2(0f, 0.5f);
+				case SpriteAlignment.Center:
+					return new Vector2(0.5f, 0.5f);
+				case SpriteAlignment.RightCenter:
+					return new Vector2(1f, 0.5f);
+
+				case SpriteAlignment.TopLeft:
+					return new Vector2(0f, 1f);
+				case SpriteAlignment.TopCenter:
+					return new Vector2(0.5f, 1f);
+				case SpriteAlignment.TopRight:
+					return new Vector2(1f, 1f);
+
+				case SpriteAlignment.Custom:
+					return customOffset;
+			}
+			return Vector2.zero;
+		}
+		#endregion
 
 		public static Color SpriteFrameColor => new Color(.55f,.55f,.55f,1);
 		public static Color SelectedSpriteFrameColor => new Color(0, 0.1f,.7f,1);
