@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" xmlns:sfsprite="SFEditor" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Label text="Sprite" class="header-label" />
+    <ui:TextField label="Name" name="name-field" binding-path="LastSelectedSprite.m_Name" data-source-type="SFEditor.SpritesData.SpriteDataCache, Assembly-CSharp-Editor" is-delayed="true" />
+    <editor:RectField label="Position" name="position-field" />
+    <sfsprite:BorderField name="border-field" />
+    <ui:EnumField label="Pivot" type="UnityEngine.SpriteAlignment, UnityEngine.CoreModule" name="pivot-alignment-field" class="row split" />
+    <ui:EnumField label="Pivot Unit Mode" type="UnityEditor.U2D.Sprites.SpriteFrameModuleBase+PivotUnitMode, Unity.2D.Sprite.Editor" name="pivot-unit-field" class="row split" />
+    <ui:Vector2Field label="Custom Pivot" name="pivot-field" />
+</ui:UXML>

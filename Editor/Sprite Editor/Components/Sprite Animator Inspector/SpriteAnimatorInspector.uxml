@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd"
+>
+  <ui:Label text="Sprite Animation Options" name="animation-overlay__title"/>
+  <ui:TextField label="Animation Clip Name" name="animation-clip-name--field"></ui:TextField>
+  <ui:Button text="Create Animation Clip" name="animation-clip--button"/>
+  <ui:Label text="Animation Clip Options"/>
+  <ui:UnsignedIntegerField label="Samples Per Second" name="animation-sps--field"/>
+</ui:UXML>

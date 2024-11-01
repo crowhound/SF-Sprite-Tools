@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Label text="Sprite Slice Inspector" class="header-label" />
+    <ui:EnumField label="Operation Type" include-obsolete-values="true" type="SFEditor.SliceGridOperationType, SFEditor.2DTools" class="row split" />
+    <ui:EnumField label="Pivot" type="UnityEditor.PivotMode, UnityEditor.CoreModule" class="row split" />
+    <ui:Vector2Field label="Custom Pivot" class="row split" />
+    <ui:EnumField label="Method" type="UnityEditor.U2D.Sprites.SpriteFrameModule+AutoSlicingMethod, Unity.2D.Sprite.Editor" class="row split" />
+</ui:UXML>

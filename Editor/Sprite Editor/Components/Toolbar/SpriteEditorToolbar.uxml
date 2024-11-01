@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+  <ui:VisualElement class="row">
+    <editor:ToolbarMenu name="Sprite Module Menu" text="Sprite Module"/>
+    <editor:ToolbarButton name ="debug-button" text="Toggle Debug"/>
+  </ui:VisualElement>
+  <ui:VisualElement class="row">
+    <editor:ToolbarButton name="apply-button" text="Apply"/>
+    <editor:ToolbarButton name="revert-button" text="Revert" />
+  </ui:VisualElement>
+  <ui:VisualElement name="tool-button__row" class="row">
+  </ui:VisualElement>
+</ui:UXML>
