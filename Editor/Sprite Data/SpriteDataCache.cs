@@ -13,6 +13,10 @@ namespace SFEditor.SpritesData
     public class SpriteDataCache : ScriptableObject
     {
 		/// <summary>
+		/// Keeps track if the data has changed since last time the SpriteRects were applied and save to the currently selected sprite sheet texture.
+		/// </summary>
+		public bool HasDataChanged = false;
+		/// <summary>
 		/// The collection of Sprite Data that have been caches for Sprite operations.
 		/// </summary>
 		public List<SpriteData> SpriteDataRects
@@ -35,7 +39,7 @@ namespace SFEditor.SpritesData
 		public List<string> SpriteNames;
 		public StringGUIDList SpriteFileIDs;
 		public HashSet<string> NamesInUse;
-		public HashSet<GUID> SpriteIDsInUse;
+		public HashSet<GUID> SpriteIDInUse;
 		public List<SpriteNameFileIdPair> SpriteNameFileIDPairs = new();
 
 		public SpriteDataCache()
@@ -44,7 +48,7 @@ namespace SFEditor.SpritesData
 			SpriteFileIDs = new StringGUIDList();
 
 			NamesInUse = new HashSet<string>();
-			SpriteIDsInUse = new HashSet<GUID>();
+			SpriteIDInUse = new HashSet<GUID>();
 		}
 
 		/// <summary>
@@ -71,11 +75,11 @@ namespace SFEditor.SpritesData
 			SpriteDataRects.Clear();
 			SpriteDataRects.InsertRange(0, newSpriteDataRects);
 			NamesInUse = new();
-			SpriteIDsInUse = new();
+			SpriteIDInUse = new();
 			for(int i = 0; i < SpriteDataRects.Count; i++)
 			{
 				NamesInUse.Add(SpriteDataRects[i].name);
-				SpriteIDsInUse.Add(SpriteDataRects[i].spriteID);
+				SpriteIDInUse.Add(SpriteDataRects[i].spriteID);
 			}
 		}
 
@@ -98,12 +102,38 @@ namespace SFEditor.SpritesData
 			SpriteFileIDs.Add(fileId);
 		}
 
-		public void AddData(SpriteData spriteData)
+
+		public bool AddSpriteData(SpriteData spriteData, bool shouldReplaceInTable = false)
 		{
+            if(spriteData.spriteID.Empty())
+            {
+                spriteData.spriteID = GUID.Generate();
+            }
+            else
+            {
+                if(IsSpriteIdInUsed(spriteData.spriteID))
+                    return false;
+            }
+
+			// TODO: Check if the Sprite exists and if it needs replaced.
+
+			if(shouldReplaceInTable)
+			{
+
+			}
+			else
+			{
+
+			}
+
 			if(_spriteDataRects != null)
+			{
 				_spriteDataRects.Add(spriteData);
+			}
+
+			return true;
 		}
-		public void RemoveData(SpriteData spriteData)
+		public void RemoveSpriteData(SpriteData spriteData)
 		{
 			if(_spriteDataRects != null)
 				_spriteDataRects.RemoveAll(x => x.spriteID == spriteData.spriteID);
@@ -141,7 +171,7 @@ namespace SFEditor.SpritesData
 			AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(dataProvider.targetObject));
 		}
 
-		public void ClearAll()
+		public void ClearAllData()
 		{
 			if(_spriteDataRects != null)
 				_spriteDataRects.Clear();
@@ -163,7 +193,16 @@ namespace SFEditor.SpritesData
 			return false;
 		}
 
-		void OnEnable()
+		public bool IsSpriteIdInUsed(GUID spriteID)
+		{
+			return SpriteIDInUse.Contains(spriteID);
+		}
+		public bool IsNameUsed(string name)
+		{
+			return NamesInUse.Contains(name);
+		}
+
+        void OnEnable()
 		{
 			if(_spriteDataRects == null)
 				_spriteDataRects = new List<SpriteData>();
