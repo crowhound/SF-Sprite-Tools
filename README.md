@@ -1,6 +1,6 @@
-# Alpha Stage Disclaimer
-Please note this package is currently in the alpha stages. Somethings might get moved, renamed, pushed into a new namespace or have the accessor type be changed.
-Once alpha 3 comes around this should not be a worry though. 
+# Pre-Alpha Stage Disclaimer
+Please note this package is currently in the pre-alpha stages. Somethings might get moved, renamed, pushed into a new namespace or have the accessor type be changed.
+Once pre-alpha three comes around this should not be a worry though. 
 
 # Important for proper installation.
 
@@ -8,7 +8,7 @@ The SF-Sprite-Tools package needs the SF-UI-Elements and the SF-Utilities packag
 Note they are currently in the Shatter Fantasy Organization GitHub repo that I will use in the future for 
 
 
-Before the release of alpha one I am adding functionality to just install the SF Sprite Tools and it will auto pull in the other two packages.
+Before the release of the full alpha one I am adding functionality to just install the SF Sprite Tools and it will auto pull in the other two packages.
 For now though follow the steps below to add the other two packages first manually adding them before installing the Sf Sprite Tools package. 
 They have a lot of helper functions meant to make a lot of things simplier for editor tool making, simplifying math functions for Vector2D/3D collections, and graphics rendering for editor windows including scene view.
 
@@ -30,5 +30,5 @@ When both those are installed you can than install the SF Sprite Editor with the
 https://github.com/crowhound/SF-Sprite-Tools.git
 
 You are than good to go. Due note I will be adding an automatic system for installing the proper dependicies soon for the SF Sprite Tools package.
-Meaning before alpha 1 full release you will be able to just install the SF Sprite Tools package and it will automatically install the other two for you.
+Meaning before alpha one full release you will be able to just install the SF Sprite Tools package and it will automatically install the other two for you.
 
