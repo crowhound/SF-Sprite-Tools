@@ -9,7 +9,6 @@ using SF.Utilities;
 using SFEditor.SpritesData.Utilities;
 using System;
 using UnityEditor.UIElements;
-using SF.UIElements.Utilities;
 
 namespace SFEditor.SpritesData
 {

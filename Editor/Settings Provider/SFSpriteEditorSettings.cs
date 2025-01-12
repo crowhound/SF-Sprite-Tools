@@ -23,12 +23,12 @@ namespace SFEditor
 		/// <summary>
 		/// This is the last value set by the user for frames per second in the Animation overlay inside the SF Sprite Editor.
 		/// </summary>
-		[SerializeField] private uint _lastSetSamplesPerSecond = 0;
+		//[SerializeField] private uint _lastSetSamplesPerSecond = 0;
 
 		/// <summary>
 		/// Should the SF Sprite Inspector remember the last manually set value of the frames per second and use it when creating new Animation Clips. This settings is project based currently so each project will be able to remeber a different value.
 		/// </summary>
-		[SerializeField] private bool _rememberManuallySetSPS = true;
+		//[SerializeField] private bool _rememberManuallySetSPS = true;
 		#endregion
 
 		public bool WasAnimatorInspectorOpen = false;
@@ -45,8 +45,8 @@ namespace SFEditor
 			{
 				settings = CreateInstance<SFSpriteEditorSettings>();
 				settings.SamplesPerSecond = 24;
-				settings._lastSetSamplesPerSecond = 0;
-				settings._rememberManuallySetSPS = true;
+				//settings._lastSetSamplesPerSecond = 0;
+				//settings._rememberManuallySetSPS = true;
 
 				if(!CheckIfSettingsDirectoryExists())
 					Directory.CreateDirectory(SFSpriteEditorSettingsFolderPath);

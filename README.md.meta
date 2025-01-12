@@ -1,10 +1,6 @@
 fileFormatVersion: 2
-guid: a6858b4655232dd479f3642dbf808404
-labels:
-- Editor
-- Sprite
-folderAsset: yes
-DefaultImporter:
+guid: b0ee6cd3832b3ce4980ae7fde0b9d10b
+TextScriptImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
