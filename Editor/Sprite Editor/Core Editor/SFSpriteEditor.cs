@@ -19,18 +19,21 @@ namespace SFEditor.SpritesData
 		SelectionClipping
 	}
 
-	/// <summary>
-	/// This is the file that contains the Editor logic for the Sprite Editor.
-	/// </summary>
-	/// For the UI implementation <see cref="SFSpriteEditor.CreateGUI"/> inside of the partial SFSpriteEditor class called SFSpriteEditorView
-	/// For the ISpriteDataProvider implementation.
-	[RequireSpriteDataProvider(typeof(ITextureDataProvider))]
+    /// <summary>
+    /// This is the file that contains the Editor initialization logic for the Sprite Editor.
+    /// 
+	/// The SFSpriteEditor is split between multiple partial classes in different files to keep it easier to organize and maintain.
+	/// SFSpriteEditorUIView file contains the SFSpriteEditor UI logic.
+	/// SFSpriteEditorDataProvider file contains the implementation of a ISpriteEditorDataProvider <see cref="ISpriteEditorDataProvider"/> for more information.
+    /// </summary>
+    /// For the UI implementation <see cref="SFSpriteEditor.CreateGUI"/> inside of the partial SFSpriteEditor class called SFSpriteEditorView
+    /// For the ISpriteDataProvider implementation.
+    [RequireSpriteDataProvider(typeof(ITextureDataProvider))]
 	public partial class SFSpriteEditor : EditorWindow
 	{
 
         /// <summary>
         /// Creates the Short Context to register to Unity's shortcut manager.
-        /// 
         /// This can be made a nested class inside types of EditorWindow to gain access to the focusedWindow variable to make sure the shortcut only activates if the desired type of EditorWindow is opened.
         /// </summary>
         public class SFSpriteEditorShortcutContext : IShortcutContext
@@ -116,24 +119,7 @@ namespace SFEditor.SpritesData
 
         protected virtual void InitSpriteDataCache()
 		{
-			if(SpriteDataCache != null)
-				DestroyImmediate(SpriteDataCache);
-
-			SpriteDataCache = CreateInstance<SpriteDataCache>();
-			SpriteDataCache.hideFlags = HideFlags.HideAndDontSave;
-
-			if(SpriteDataProvider != null)
-			{
-				var spriteList = SpriteDataProvider.GetSpriteRects().ToSpriteData();
-
-				if(_nameFileDataProvider == null)
-					_nameFileDataProvider = new DefaultSpriteNameFileIdProvider(spriteList);
-
-				var nameFileIDPairs = _nameFileDataProvider.GetNameFileIdPairs();
-
-				SpriteDataCache.SetSpriteDataRects(spriteList);
-				SpriteDataCache.SetFileNameIdPairs(nameFileIDPairs);
-			}
+			SpriteDataCache = SpriteDataCache.DestroyAndCreateNewCache(SpriteDataCache, SpriteDataProvider);
 		}
 
 		protected virtual void RegisterCallbacks()
@@ -182,75 +168,6 @@ namespace SFEditor.SpritesData
 
             }
         }
-
-		private bool HandleSpriteSelection()
-		{
-			bool changed = false;
-
-            var oldSelectedRect = SpriteDataCache.LastSelectedSprite;
-
-			var triedSelectedRect = TrySelectSprite(Event.current.mousePosition);
-
-			if(triedSelectedRect != oldSelectedRect)
-			{
-				Undo.RegisterCompleteObjectUndo(this, "Sprite Selection");
-				SpriteDataCache.LastSelectedSprite = (SpriteData)triedSelectedRect;
-
-				if(SpriteDataCache.LastSelectedSprite != null)
-				{
-					if(Event.current.control)
-					{
-						SpriteDataCache.SelectedSpriteRects.Add(SpriteDataCache.LastSelectedSprite);
-					}
-					else
-					{
-						SpriteDataCache.SelectedSpriteRects.Clear();
-						SpriteDataCache.SelectedSpriteRects.Add(SpriteDataCache.LastSelectedSprite);
-					}
-				}
-				else
-				{
-					SpriteDataCache.SelectedSpriteRects.Clear();
-				}
-
-				changed = true;
-			}
-
-			return changed;
-		}
-
-		private SpriteRect TrySelectSprite(Vector2 mousePosition)
-		{
-			float selectionSize = float.MaxValue;
-			SpriteRect currentRect = null;
-
-			// We have to multiply the mouse position by the handles matrix being used by the texture view to properly get the right position in texture coordintes.
-            mousePosition = _textureHandlesMatrix.inverse.MultiplyPoint(mousePosition);
-
-			// Need to convert the mouse position over to the flipped view port matrix to match the texture sprite rect coordinates
-			// mousePosition = Handles.inverseMatrix.MultiplyPoint(mousePosition);
-
-			for (int i = 0; i < SpriteDataCache.SpriteDataRects.Count; i++)
-			{
-				var spriteRect = SpriteDataCache.SpriteDataRects[i];
-				if(spriteRect.rect.Contains(mousePosition))
-				{
-					// If the current sprite was the one being clicked just return the same sprite.
-					if(spriteRect == SpriteDataCache.LastSelectedSprite)
-						return SpriteDataCache.LastSelectedSprite;
-
-					float width = spriteRect.rect.width;
-					float height = spriteRect.rect.height;
-					float newSize = width * height;
-					if(width > 0f && height > 0f && newSize < selectionSize)
-					{
-						currentRect = spriteRect;
-						selectionSize = newSize;
-					}
-				}
-			}
-			return currentRect;
-		}
 
 		// TODO: Implement this sucker.
 		protected List<SpriteRect> GetBoxSelectionSprites()

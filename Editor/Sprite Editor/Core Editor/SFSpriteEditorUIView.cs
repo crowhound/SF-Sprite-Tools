@@ -22,6 +22,10 @@ namespace SFEditor.SpritesData
         public ScrollView ScrollView;
         public VisualElement TextureViewContainer;
 
+        private Painter2D _painter2d;
+        private int _gridLineWidth = 3;
+        private Vector2 _gridSize = new(16, 16);
+
         /* Sprite Module Elements*/
         /// <summary>
         /// This is the UI container for features added onto the core SF Sprite Editor.
@@ -51,7 +55,7 @@ namespace SFEditor.SpritesData
         private MouseRectDragManipulator _panningManipulator = new MouseRectDragManipulator(MouseButton.LeftMouse, 0.5f, EventModifiers.Alt);
         #endregion
 
-        protected Matrix4x4 _textureHandlesMatrix;
+        protected Matrix4x4 _textureHandlesMatrix => SpriteDataCache.TextureHandlesMatrix;
 
         /// <summary>
 		/// The unmodified View Rect for the container holding the texture preview rect.
@@ -81,9 +85,21 @@ namespace SFEditor.SpritesData
         {
             get 
             {
-                return new Vector2(
+                Vector2 checkedValue = new Vector2(
                     ScrollView.layout.xMax - TextureViewContainer.layout.width / 2,
                     ScrollView.layout.yMax - TextureViewContainer.layout.height / 2);
+
+                /*  When loading a new texture there is a chance the newly loaded texture size
+                *   could make sutracting the TextureViewContainer return a negative value.
+                *   This normally only happens if you have one texture already loaded and than are switching to a new
+                *   texture with a vastly different width or height compared to the previous texture.
+                */
+                if(checkedValue.x < 0)
+                    checkedValue = new(0, ScrollView.layout.yMax / 2);
+                if(checkedValue.y < 0)
+                    checkedValue = new(ScrollView.layout.xMax / 2, 0);
+
+                return checkedValue;
             }
         }
 
@@ -106,8 +122,54 @@ namespace SFEditor.SpritesData
             InitToolbar();
             RegisterUICallbacks();
 
+            // TextureViewContainer.generateVisualContent += Draw;
             OpenSpriteFrameModule?.Invoke(new SFSpriteInspectorFrame(this));
+
+
         }
+        /// <summary>
+        /// NOT FULLY IMPLEMENTED YET.
+        /// </summary>
+        /// <param name="context"></param>
+        private void Draw(MeshGenerationContext context)
+        {
+            _painter2d = context.painter2D;
+            _painter2d.lineJoin = LineJoin.Miter;
+            _painter2d.lineWidth = _gridLineWidth;
+            _painter2d.lineCap = LineCap.Butt;
+            _painter2d.strokeColor = Color.white;
+
+            _painter2d.BeginPath();
+            DrawFullGrid(context.visualElement, _painter2d);
+            _painter2d.Stroke();
+        }
+
+        /// <summary>
+        /// Draws a grid to fill the entire element up on the passed in Painter2D.  
+        /// </summary>
+        /// <param name="context"></param>
+        private void DrawFullGrid(VisualElement gridCanvas, Painter2D painter2D)
+        {
+            Vector2 gridTiling = new Vector2
+                (
+                    Mathf.RoundToInt(gridCanvas.resolvedStyle.width / _gridSize.x),
+                    Mathf.RoundToInt(gridCanvas.resolvedStyle.height / _gridSize.y)
+                );
+
+            // We do plus on in the for loops to make sure we get the last row and column of lines.
+            for(int x = 0; x < gridTiling.x + 1; x++)
+            {
+                painter2D.MoveTo(new Vector2(x * _gridSize.x, 0));
+                painter2D.LineTo(new Vector2(x * _gridSize.x, gridCanvas.resolvedStyle.height));
+            }
+
+            for(int y = 0; y < gridTiling.y + 1; y++)
+            {
+                painter2D.MoveTo(new Vector2(0, y * _gridSize.y));
+                painter2D.LineTo(new Vector2(gridCanvas.resolvedStyle.width, y * _gridSize.y));
+            }
+        }
+
 
         protected virtual void InitWindowView()
         {
@@ -226,7 +288,7 @@ namespace SFEditor.SpritesData
             // Scroll position is added separately so we can use it with GUIClip.
             Handles.matrix = Matrix4x4.TRS(handlesPos, Quaternion.identity, handlesScale);
 
-            _textureHandlesMatrix = Handles.matrix;
+            SpriteDataCache.TextureHandlesMatrix = Handles.matrix;
             _dragManipulator.HandlesMatrix = Handles.matrix;
         }
 
@@ -411,10 +473,10 @@ namespace SFEditor.SpritesData
 
         private void OnDragStart(Rect rect)
         {
-           Vector2 mousePosition = _textureHandlesMatrix.inverse.MultiplyPoint(_dragManipulator.StartingPosition);
+           Vector2 mousePosition = _dragManipulator.StartingPosition;
 
-            if(TrySelectSprite(mousePosition) != null)
-                _dragManipulator.StopDragging();
+           if(SpriteDataCache.TrySelectSprite(mousePosition) != null)
+               _dragManipulator.StopDragging();
         }
         private void OnDragEnd(Rect rect)
         {
@@ -456,7 +518,7 @@ namespace SFEditor.SpritesData
 
         private void OnMouseDown(MouseDownEvent evt)
         {
-            if(HandleSpriteSelection())
+            if(SpriteDataCache.ShouldHandleSpriteSelection())
                 OnHandleSpriteSelection();
         }
         protected virtual void OnOpenSpriteFrameModule(ISpriteFrameModule spriteFrameModule)

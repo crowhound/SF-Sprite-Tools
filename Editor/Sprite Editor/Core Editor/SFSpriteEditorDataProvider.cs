@@ -85,7 +85,7 @@ namespace SFEditor.SpritesData
 
 			if(SelectedObject == null) return;
 
-			SpriteDataProvider = SFSpriteEditorUtilities.CreateInitSpriteEditorDataProvider(SelectedObject);
+            SpriteDataProvider = SFSpriteEditorUtilities.CreateInitSpriteEditorDataProvider(SelectedObject);
 			TextureDataProvider = GetTextureDataProviderFromObj(SelectedObject);
 
 			if(TextureDataProvider != null)
