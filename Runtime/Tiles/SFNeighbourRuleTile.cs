@@ -10,8 +10,6 @@ public class SFNeighbourRuleTile : RuleTile<SFNeighbourRuleTile.Neighbor> {
     }
 
     public override bool RuleMatch(int neighbor, TileBase tile) {
-		if(tile is TileBase && tile != null)
-			return true;
 
         switch (neighbor) {
             case Neighbor.Null: return tile == null;
