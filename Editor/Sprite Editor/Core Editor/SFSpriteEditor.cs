@@ -2,8 +2,6 @@ using UnityEditor;
 using UnityEditor.U2D.Sprites;
 
 using UnityEngine;
-using Event = UnityEngine.Event;
-using SFEditor.SpritesData.Utilities;
 using SFEditor.Utilities;
 using System;
 using System.Collections.Generic;
@@ -57,7 +55,7 @@ namespace SFEditor.SpritesData
 
 		public bool HasSelected { get { return SpriteDataCache.LastSelectedSprite != null; } }
 
-		[MenuItem("Tools/SF/Sprite Editor")]
+		[MenuItem("SF/2D/Sprite Editor")]
         [Shortcut("SF/Sprite Tools/Open Sprite Editor",null, KeyCode.O, ShortcutModifiers.Alt)]
         public static void ShowWindow()
 		{
