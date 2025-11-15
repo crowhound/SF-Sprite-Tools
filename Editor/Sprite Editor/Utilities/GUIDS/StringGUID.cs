@@ -1,4 +1,7 @@
+
+
 using UnityEditor;
+using UnityEngine;
 
 namespace SFEditor.Utilities
 {
@@ -8,7 +11,7 @@ namespace SFEditor.Utilities
 	[System.Serializable]
     public struct StringGUID
     {
-		[UnityEngine.SerializeField] private string _stringGUID;
+		[SerializeField] private string _stringGUID;
 
 		public StringGUID(GUID guid)
 		{

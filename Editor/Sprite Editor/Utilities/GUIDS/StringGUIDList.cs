@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEditor;
+using UnityEngine;
+
 
 namespace SFEditor.Utilities
 {
@@ -13,8 +14,7 @@ namespace SFEditor.Utilities
 	[Serializable]
     public class StringGUIDList : IReadOnlyList<GUID>
     {
-		[UnityEngine.SerializeField]
-		private List<StringGUID> _list = new List<StringGUID>();
+		[SerializeField] private List<StringGUID> _list = new List<StringGUID>();
 
 		GUID IReadOnlyList<GUID>.this[int index] 
 		{ 
