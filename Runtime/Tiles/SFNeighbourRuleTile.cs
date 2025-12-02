@@ -2,21 +2,24 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "2D/SF/Tiles/SFNeighbour Rule Tile", fileName = "Neighbor Rule Tile")]
-public class SFNeighbourRuleTile : RuleTile<SFNeighbourRuleTile.Neighbor> {
+public class SFNeighbourRuleTile : RuleTile<SFNeighbourRuleTile.SFNeighbor> {
 
-    public class Neighbor : RuleTile.TilingRule.Neighbor {
+    public class SFNeighbor : TilingRuleOutput.Neighbor {
         public const int Null = 3;
         public const int NotNull = 4;
     }
 
     public override bool RuleMatch(int neighbor, TileBase tile) 
     {
+        if (tile is RuleOverrideTile ot)
+            tile = ot.m_InstanceTile;
+    
         switch (neighbor)
         {
             case TilingRuleOutput.Neighbor.This: return tile == this;
             case TilingRuleOutput.Neighbor.NotThis: return tile != this;
-            case Neighbor.Null: return tile == null;
-            case Neighbor.NotNull: return tile != null;
+            case SFNeighbor.Null: return tile == null;
+            case SFNeighbor.NotNull: return tile != null;
         }
 
         return true;
