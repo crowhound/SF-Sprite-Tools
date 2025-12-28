@@ -1,12 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ui="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
     xmlns:sfui="SF.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+    noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
 >
-  <Style src="project://database/Packages/com.shatter-fantasy.sf-ui-elements/Runtime/Styles/CommonUSS.uss"/>
   <ui:Label text="Border"/>
   <sfui:SFRow class="split">
     <ui:IntegerField label="L"/>

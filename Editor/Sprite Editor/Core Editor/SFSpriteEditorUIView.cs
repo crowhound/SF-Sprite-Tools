@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 
 using SFEditor.UIElements.Utilities;
 using SFEditor.SpritesData.UIElements;
-using SF.Utilities;
 using SFEditor.SpritesData.Utilities;
 using System;
+using SF.Utilities;
 using UnityEditor.UIElements;
 
 namespace SFEditor.SpritesData
@@ -322,7 +322,7 @@ namespace SFEditor.SpritesData
             TextureViewContainer.style.maxHeight = new StyleLength(new Length(Texture.height, LengthUnit.Pixel));
 
             //TextureViewContainer.transform.scale = new Vector3(_zoomLevel, _zoomLevel, 1);
-            TextureViewContainer.transform.position = new Vector3(0,0,0);
+            TextureViewContainer.style.translate = new Vector3(0,0,0);
         }
 
         private void DoTextureGUI()
@@ -433,7 +433,7 @@ namespace SFEditor.SpritesData
             ZoomLevel = 1;
             ScrollPosition = new Vector2((ScrollView.layout.size.x / 2 - Texture.width / 2) ,0);
             ScrollView.scrollOffset = ScrollPosition;
-            TextureViewContainer.transform.position = ScrollPosition;
+            TextureViewContainer.style.translate = ScrollPosition;
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace SFEditor.SpritesData
                 SpriteEditorToolbar.DebugInspector.Q<Toggle>("is-panning").value = true;
 
             ScrollPosition += _panningManipulator.DeltaPosition * _scrollSpeed;
-            TextureViewContainer.transform.position = ScrollPosition;
+            TextureViewContainer.style.translate = ScrollPosition;
         }
 
         private void OnMouseDown(MouseDownEvent evt)
