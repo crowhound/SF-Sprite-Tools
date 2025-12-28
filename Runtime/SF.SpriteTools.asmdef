@@ -3,7 +3,8 @@
     "rootNamespace": "SF.Sprites",
     "references": [
         "Unity.2D.Tilemap.Extras",
-        "Unity.2D.Tilemap.Editor"
+        "Unity.2D.Tilemap.Editor",
+        "Unity.2D.Tilemap.Experimental"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
